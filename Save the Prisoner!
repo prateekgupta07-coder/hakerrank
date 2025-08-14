@@ -1,0 +1,8 @@
+int saveThePrisoner(int n, int m, int s) {
+    long long last_Prisoner = ((long long)s + m - 1) % n;
+    if (last_Prisoner == 0)
+        return n;
+    else
+        return last_Prisoner;
+    
+}
