@@ -1,0 +1,37 @@
+int* climbingLeaderboard(int ranked_count, int* ranked, int player_count, int* player, int* result_count) {
+    
+    int* unique = malloc(ranked_count * sizeof(int));
+    int unique_count = 0;
+
+    unique[0] = ranked[0];
+    unique_count = 1;
+    for (int i = 1; i < ranked_count; i++) {
+        if (ranked[i] != ranked[i - 1]) {
+            unique[unique_count++] = ranked[i];
+        }
+    }
+
+    
+    int* result = malloc(player_count * sizeof(int));
+    *result_count = player_count;
+
+    int i = unique_count - 1;
+    
+    for (int j = 0; j < player_count; j++) {
+        int score = player[j];
+
+        
+        while (i >= 0 && score >= unique[i]) {
+            i--;
+        }
+
+        if (i < 0) {
+            result[j] = 1; 
+        } else {
+            result[j] = i + 2;  
+        }
+    }
+
+    free(unique); 
+    return result;   
+}
