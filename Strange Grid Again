@@ -1,0 +1,5 @@
+long long k = (r - 1) / 2;
+    long long base = k * 10LL;
+    long long ans = base + (c - 1) * 2LL + (r % 2 == 0 ? 1LL : 0LL);
+    return ans;
+}
