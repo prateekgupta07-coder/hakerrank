@@ -1,0 +1,13 @@
+    public static String counterGame(long n) {
+        if(n==1){
+            return "Richard";
+        }
+        long x=n-1;
+        int count=0;
+        while(x>0){
+            x&=(x-1);
+            count++;
+        }
+        return (count%2==1)?"Louise":"Richard";
+    }
+}
