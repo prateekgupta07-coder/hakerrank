@@ -1,0 +1,80 @@
+import java.io.*;
+import java.math.BigInteger;
+import java.util.NoSuchElementException;
+
+public class SpecialMultipleBasic {
+
+    static class ArrayQueue {
+        String[] queue;
+        int front;
+        int rear;
+        int capacity;
+
+        public ArrayQueue(int capacity) {
+            this.capacity = capacity;
+            this.queue = new String[capacity];
+            this.front = 0;
+            this.rear = 0;
+        }
+
+        public void enqueue(String item) {
+            if (rear == capacity) {
+                String[] newQueue = new String[capacity * 2];
+                System.arraycopy(queue, front, newQueue, 0, rear - front);
+                queue = newQueue;
+                rear = rear - front;
+                front = 0;
+                capacity *= 2;
+            }
+            queue[rear] = item;
+            rear++;
+        }
+
+        public String dequeue() {
+            if (isEmpty()) {
+                throw new NoSuchElementException("Queue is empty");
+            }
+            String item = queue[front];
+            front++;
+            return item;
+        }
+
+        public boolean isEmpty() {
+            return front == rear;
+        }
+    }
+
+    public static String solve(int n) {
+        ArrayQueue queue = new ArrayQueue(100);
+        queue.enqueue("9");
+
+        while (!queue.isEmpty()) {
+            String current = queue.dequeue();
+            
+            if (new BigInteger(current).mod(BigInteger.valueOf(n)).equals(BigInteger.ZERO)) {
+                return current;
+            }
+
+            queue.enqueue(current + "0");
+            queue.enqueue(current + "9");
+        }
+        return "";
+    }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int t = Integer.parseInt(bufferedReader.readLine().trim());
+
+        for (int tItr = 0; tItr < t; tItr++) {
+            int n = Integer.parseInt(bufferedReader.readLine().trim());
+            String result = solve(n);
+            bufferedWriter.write(result);
+            bufferedWriter.newLine();
+        }
+
+        bufferedReader.close();
+        bufferedWriter.close();
+    }
+}
