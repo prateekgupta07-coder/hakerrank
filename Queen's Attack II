@@ -1,0 +1,44 @@
+int queensAttack(int n, int k, int r_q, int c_q, int obstacles_rows, int obstacles_columns, int** obstacles) {
+    int up = n - r_q;
+    int down = r_q - 1;
+    int right = n - c_q;
+    int left = c_q - 1;
+
+    int up_right = (n - r_q < n - c_q) ? n - r_q : n - c_q;
+    int up_left = (n - r_q < c_q - 1) ? n - r_q : c_q - 1;
+    int down_right = (r_q - 1 < n - c_q) ? r_q - 1 : n - c_q;
+    int down_left = (r_q - 1 < c_q - 1) ? r_q - 1 : c_q - 1;
+
+    for (int i = 0; i < k; i++) {
+        int r = obstacles[i][0];
+        int c = obstacles[i][1];
+
+        if (c == c_q && r > r_q) {
+            int dist = r - r_q - 1;
+            if (dist < up) up = dist;
+        } else if (c == c_q && r < r_q) {
+            int dist = r_q - r - 1;
+            if (dist < down) down = dist;
+        } else if (r == r_q && c > c_q) {
+            int dist = c - c_q - 1;
+            if (dist < right) right = dist;
+        } else if (r == r_q && c < c_q) {
+            int dist = c_q - c - 1;
+            if (dist < left) left = dist;
+        } else if (r - r_q == c - c_q && r > r_q) {
+            int dist = r - r_q - 1;
+            if (dist < up_right) up_right = dist;
+        } else if (r - r_q == c_q - c && r > r_q) {
+            int dist = r - r_q - 1;
+            if (dist < up_left) up_left = dist;
+        } else if (r_q - r == c - c_q && r < r_q) {
+            int dist = r_q - r - 1;
+            if (dist < down_right) down_right = dist;
+        } else if (r_q - r == c_q - c && r < r_q) {
+            int dist = r_q - r - 1;
+            if (dist < down_left) down_left = dist;
+        }
+    }
+
+    return up + down + left + right + up_left + up_right + down_left + down_right;
+}
