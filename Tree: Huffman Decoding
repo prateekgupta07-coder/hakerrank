@@ -1,0 +1,13 @@
+void decode_huff(node* root, string s) {
+    node* curr = root;
+
+    for (char c : s) {
+        curr = (c == '0') ? curr->left : curr->right;
+
+        if (curr->left == nullptr && curr->right == nullptr) {
+            cout << curr->data;
+            curr = root;
+        }
+    }
+}
+
